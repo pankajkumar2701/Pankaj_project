@@ -13,7 +13,6 @@ namespace pankaj - project . Model{
         /// Primary key for the Product 
         /// </summary>
         [Key]
-        [Required]
         public Guid ProductId { get; set; }
         /// <summary>
         /// Name of the Product 
