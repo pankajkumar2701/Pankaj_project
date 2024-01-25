@@ -13,7 +13,6 @@ namespace pankaj - project . Model{
         /// Primary key for the OrderLine 
         /// </summary>
         [Key]
-        [Required]
         public Guid OrderLineId { get; set; }
         /// <summary>
         /// Foreign key referencing the Order to which the OrderLine belongs 
@@ -24,7 +23,6 @@ namespace pankaj - project . Model{
         /// Navigation property representing the associated Order
         /// </summary>
         [ForeignKey("OrderID")]
-        [JsonIgnore]
         public Order Order { get; set; }
         /// <summary>
         /// Foreign key referencing the Product to which the OrderLine belongs 
@@ -35,7 +33,6 @@ namespace pankaj - project . Model{
         /// Navigation property representing the associated Product
         /// </summary>
         [ForeignKey("ProductId")]
-        [JsonIgnore]
         public Product Product { get; set; }
         /// <summary>
         /// Quantity of the OrderLine 
