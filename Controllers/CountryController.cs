@@ -32,18 +32,17 @@ namespace pankaj-project.Controllers{
         }
 
         /// <summary>Retrieves a list of countrys based on specified filters</summary>
-        /// <param name="filters">The filter criteria in JSON format. Use the following format:                                
-        /// [
-        ///   {
-        ///     "Property": "PropertyName",
-        ///     "Operator": "Equal",
-        ///     "Value": "FilterValue"
-        ///   }
-        /// ]
+        /// <param name="filters">The filter criteria in JSON format. Use the following format: [{"Property": "PropertyName", "Operator": "Equal", "Value": "FilterValue"}] </param>
+        /// <returns>The filtered list of countrys</returns>
         [HttpGet]
         public IActionResult Get([FromQuery] string filters)
         {
-            var filterCriteria = JsonHelper.Deserialize<List<FilterCriteria>>(filters);
+            List<FilterCriteria> filterCriteria = null;
+            if (!string.IsNullOrEmpty(filters))
+            {
+                filterCriteria = JsonHelper.Deserialize<List<FilterCriteria>>(filters);
+            }
+
             var query = _context.Country.AsQueryable();
             var result = FilterService<Country>.ApplyFilter(query, filterCriteria);
             return Ok(result);
@@ -53,10 +52,10 @@ namespace pankaj-project.Controllers{
         /// <param name="entityId">The primary key of the country</param>
         /// <returns>The country data</returns>
         [HttpGet]
-        [Route("{entityId}")]
-        public IActionResult GetById([FromRoute] string entityId)
+        [Route("{entityId:Guid}")]
+        public IActionResult GetById([FromRoute] Guid entityId)
         {
-            var entityData = _context.Country.FirstOrDefault(entity => entity.Name == entityId);
+            var entityData = _context.Country.FirstOrDefault(entity => entity.CountryId == entityId);
             return Ok(entityData);
         }
 
@@ -64,10 +63,10 @@ namespace pankaj-project.Controllers{
         /// <param name="entityId">The primary key of the country</param>
         /// <returns>The result of the operation</returns>
         [HttpDelete]
-        [Route("{entityId}")]
-        public IActionResult DeleteById([FromRoute] string entityId)
+        [Route("{entityId:Guid}")]
+        public IActionResult DeleteById([FromRoute] Guid entityId)
         {
-            var entityData = _context.Country.FirstOrDefault(entity => entity.Name == entityId);
+            var entityData = _context.Country.FirstOrDefault(entity => entity.CountryId == entityId);
             if (entityData == null)
             {
                 return NotFound();
@@ -83,21 +82,21 @@ namespace pankaj-project.Controllers{
         /// <param name="updatedEntity">The country data to be updated</param>
         /// <returns>The result of the operation</returns>
         [HttpPut]
-        [Route("{entityId}")]
-        public IActionResult UpdateById(string entityId, [FromBody] Country updatedEntity)
+        [Route("{entityId:Guid}")]
+        public IActionResult UpdateById(Guid entityId, [FromBody] Country updatedEntity)
         {
-            if (entityId != updatedEntity.Name)
+            if (entityId != updatedEntity.CountryId)
             {
-                return BadRequest("Mismatched Name");
+                return BadRequest("Mismatched CountryId");
             }
 
-            var entityData = _context.Country.FirstOrDefault(entity => entity.Name == entityId);
+            var entityData = _context.Country.FirstOrDefault(entity => entity.CountryId == entityId);
             if (entityData == null)
             {
                 return NotFound();
             }
 
-            var propertiesToUpdate = typeof(Country).GetProperties().Where(property => property.Name != "Name").ToList();
+            var propertiesToUpdate = typeof(Country).GetProperties().Where(property => property.Name != "CountryId").ToList();
             foreach (var property in propertiesToUpdate)
             {
                 property.SetValue(entityData, property.GetValue(updatedEntity));
