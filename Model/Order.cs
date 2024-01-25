@@ -13,7 +13,6 @@ namespace pankaj - project . Model{
         /// Primary key for the Order 
         /// </summary>
         [Key]
-        [Required]
         public Guid OrderID { get; set; }
         /// <summary>
         /// Foreign key referencing the Customer to which the Order belongs 
@@ -24,7 +23,6 @@ namespace pankaj - project . Model{
         /// Navigation property representing the associated Customer
         /// </summary>
         [ForeignKey("CustomerId")]
-        [JsonIgnore]
         public Customer Customer { get; set; }
         /// <summary>
         /// TotalAmount of the Order 
@@ -39,7 +37,6 @@ namespace pankaj - project . Model{
         /// Navigation property representing the associated OrderStatus
         /// </summary>
         [ForeignKey("OrderStatusId")]
-        [JsonIgnore]
         public OrderStatus OrderStatus { get; set; }
         /// <summary>
         /// Collection navigation property representing associated 
