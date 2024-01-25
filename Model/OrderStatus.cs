@@ -13,7 +13,6 @@ namespace pankaj - project . Model{
         /// Primary key for the OrderStatus 
         /// </summary>
         [Key]
-        [Required]
         public Guid OrderStatusId { get; set; }
         /// <summary>
         /// Name of the OrderStatus 
