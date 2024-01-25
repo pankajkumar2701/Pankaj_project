@@ -18,9 +18,8 @@ namespace pankaj-project.Data{
             modelBuilder.Entity<OrderLine>().HasKey(a => a.OrderLineId);
             modelBuilder.Entity<Product>().HasKey(a => a.ProductId);
             modelBuilder.Entity<OrderStatus>().HasKey(a => a.OrderStatusId);
-            modelBuilder.Entity<Country>().HasKey(a => a.Name);
+            modelBuilder.Entity<Country>().HasKey(a => a.CountryId);
             modelBuilder.Entity<Sales>().HasKey(a => a.SalesId);
-            modelBuilder.Entity<Customer>().HasOne(a => a.Country).WithMany(b => b.Customers).HasForeignKey(c => c.CountryName);
             modelBuilder.Entity<Order>().HasOne(a => a.Customer).WithMany(b => b.Orders).HasForeignKey(c => c.CustomerId);
             modelBuilder.Entity<Order>().HasOne(a => a.OrderStatus).WithMany(b => b.Orders).HasForeignKey(c => c.OrderStatusId);
             modelBuilder.Entity<OrderLine>().HasOne(a => a.Order).WithMany(b => b.OrderLines).HasForeignKey(c => c.OrderId);
