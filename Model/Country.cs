@@ -10,23 +10,17 @@ namespace pankaj - project . Model{
     public class Country
     {
         /// <summary>
-        /// CountryId of the Country 
+        /// Primary key for the Country 
         /// </summary>
+        [Key]
         public Guid CountryId { get; set; }
         /// <summary>
         /// Code of the Country 
         /// </summary>
         public string Code { get; set; }
-
         /// <summary>
-        /// Primary key for the Country 
+        /// Name of the Country 
         /// </summary>
-        [Key]
-        [Required]
         public string Name { get; set; }
-        /// <summary>
-        /// Collection navigation property representing associated 
-        /// </summary>
-        public ICollection<Customer> Customers { get; set; }
     }
 }
