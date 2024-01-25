@@ -13,7 +13,6 @@ namespace pankaj - project . Model{
         /// Primary key for the Sales 
         /// </summary>
         [Key]
-        [Required]
         public Guid SalesId { get; set; }
         /// <summary>
         /// Name of the Sales 
@@ -28,7 +27,6 @@ namespace pankaj - project . Model{
         /// Navigation property representing the associated Product
         /// </summary>
         [ForeignKey("ProductId")]
-        [JsonIgnore]
         public Product Product { get; set; }
         /// <summary>
         /// CustomerId of the Sales 
