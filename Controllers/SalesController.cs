@@ -32,18 +32,17 @@ namespace pankaj-project.Controllers{
         }
 
         /// <summary>Retrieves a list of saless based on specified filters</summary>
-        /// <param name="filters">The filter criteria in JSON format. Use the following format:                                
-        /// [
-        ///   {
-        ///     "Property": "PropertyName",
-        ///     "Operator": "Equal",
-        ///     "Value": "FilterValue"
-        ///   }
-        /// ]
+        /// <param name="filters">The filter criteria in JSON format. Use the following format: [{"Property": "PropertyName", "Operator": "Equal", "Value": "FilterValue"}] </param>
+        /// <returns>The filtered list of saless</returns>
         [HttpGet]
         public IActionResult Get([FromQuery] string filters)
         {
-            var filterCriteria = JsonHelper.Deserialize<List<FilterCriteria>>(filters);
+            List<FilterCriteria> filterCriteria = null;
+            if (!string.IsNullOrEmpty(filters))
+            {
+                filterCriteria = JsonHelper.Deserialize<List<FilterCriteria>>(filters);
+            }
+
             var query = _context.Sales.AsQueryable();
             var result = FilterService<Sales>.ApplyFilter(query, filterCriteria);
             return Ok(result);
